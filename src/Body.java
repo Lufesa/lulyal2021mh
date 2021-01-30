@@ -1,40 +1,51 @@
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 
 public class Body {
 	
 	private String name;
 	private double  mass;
-	private String image;
+	private BufferedImage image;
 	
-	// Get methods
-	
+	// Get methods	
 
 	public String getName() {
-		String output = this.name;
-		return output;
+		return this.name;
 	}
 	
-	public String getImage() {
-		String output = this.image;
-		return output;
+	public BufferedImage getImage() {
+		return this.image;
 	}
 	
 	public double getMass() {
-		double output = this.mass;
-		return output;
+		return this.mass;
 	}
 	
 	// Gets the info from a CSV file ?
 	
-	public Body(String name, double mass, String URL) {
+	public Body(String name, double mass, String imagePath) {
 		this.name=name;
 		this.mass=mass;
-		this.image=URL;
+		
+		try {
+			this.image=ImageIO.read(new File(imagePath));
+		} catch (IOException e) {
+			System.out.print("Image file of a body could not be loaded.");
+		}
 	}
 	
 	public Body(String name, double mass) {
 		this.name=name;
 		this.mass=mass;
-		this.image="DEFAULT BOX URL";
+		
+		try {
+			this.image=ImageIO.read(new File("./images/default.png"));
+		} catch (IOException e) {
+			System.out.print("Default image file could not be loaded.");
+		}
 	}
 	
 	
