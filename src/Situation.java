@@ -17,16 +17,19 @@ public class Situation {
 	private double theta;
 	private Random random = new Random();
 	
+	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables () {
 		Body body = new Body("Box", random.nextDouble());
 		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
 		
 	}
 	
+	// Solve the problem 
 	public void solveProblem() {
 		T = m*a+m*g*Math.sin(Math.toRadians(theta));
 	}
 
+	
 	public static void main(String[] args) throws IOException{
 		String row;
 		String[] extract = new String[5];
@@ -38,12 +41,7 @@ public class Situation {
 	
 		// Get information from an object in CSV file
 		BufferedReader csvReader = new BufferedReader(new FileReader("C:\\\\Users\\\\superlufesa\\\\Desktop\\\\McHacks2021\\\\src\\\\objectData.csv"));
-		
-		//int chooseObject
-		// for(int i = 0; )
-		
-		
-		
+
 		while ((row = csvReader.readLine()) != null) {
 		    String[] data = row.split(",");
 		    System.out.println(data[0]);
