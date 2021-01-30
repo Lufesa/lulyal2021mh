@@ -45,7 +45,7 @@ public class Situation {
 		//int chooseObject
 		// for(int i = 0; )
 		
-		
+		//
 		
 		while ((row = csvReader.readLine()) != null) {
 		    String[] data = row.split(",");
