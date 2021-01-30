@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
+import java.awt.Graphics;
 
 public class Situation {
 	
@@ -15,11 +17,14 @@ public class Situation {
 	private double g = 9.81;
 	private double a;
 	private double theta;
+	
+	private BufferedImage sketch;
+	private Body body;
 	private Random random = new Random();
 	
 	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables () {
-		Body body = new Body("Box", random.nextDouble());
+		this.body = new Body("Box", random.nextDouble());
 		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
 		
 	}
@@ -27,6 +32,17 @@ public class Situation {
 	// Solve the problem 
 	public void solveProblem() {
 		T = m*a+m*g*Math.sin(Math.toRadians(theta));
+	}
+	
+	public void createFigure() {
+		BufferedImage combined = new BufferedImage(sketch.getHeight(), sketch.getWidth(), BufferedImage.TYPE_4BYTE_ABGR);
+		
+		Graphics g = combined.getGraphics();
+		g.drawImage(sketch, 0,0, null);
+		g.drawImage(body.getImage(), 0,0, null);
+		
+		g.dispose();
+		this.sketch = combined;
 	}
 
 	
