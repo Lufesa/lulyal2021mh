@@ -41,18 +41,7 @@ public class Situation {
 	
 		// Get information from an object in CSV file
 		BufferedReader csvReader = new BufferedReader(new FileReader("C:\\\\Users\\\\superlufesa\\\\Desktop\\\\McHacks2021\\\\src\\\\objectData.csv"));
-		
-		//int chooseObject
-		// for(int i = 0; )
-		
-<<<<<<< HEAD
-		//
-		//
-		//
-=======
-		
->>>>>>> cccdf08b87b358ea70e6ec1adfffcd4ff5b6418f
-		
+
 		while ((row = csvReader.readLine()) != null) {
 		    String[] data = row.split(",");
 		    System.out.println(data[0]);
