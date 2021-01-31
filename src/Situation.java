@@ -33,9 +33,6 @@ public class Situation {
 	// Main variables needed, might end up putting it in the constructor tho
 	
 	public void createProblemVariables(String path) {
-<<<<<<< HEAD
-		this.body = new Body("Box", random.nextDouble(), "images/penguin.png");
-=======
 		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0, "images/banana.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
@@ -46,8 +43,9 @@ public class Situation {
 		this.a = Math.round((random.nextGaussian()*8+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
 		this.theta = Math.round((random.nextGaussian()*20+45)*100.0) / 100.0;
 		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
+		
 		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg."+this.theta);
->>>>>>> 7183da8ba6967fb2e40e8b369acb799eedea48b7
+		
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -85,12 +83,11 @@ public class Situation {
 		situation.createProblemVariables("./images/situation.png");
 		JFrame frame = new JFrame();
 		situation.createFigure();
-		BufferedImage sketch = addLabel(situation.getSketch(), "Given that m = " + "1.5" + "kg, and the acceleration is " + " 3 " + "m/s^2. What is the tension on the cable?");
+		BufferedImage sketch = addLabel(situation.getSketch(), situation.printQuestion());
 		frame.add(new Sketch(sketch));
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		System.out.println(situation.printQuestion());
 	}
 	
 	private BufferedImage rotateImage(BufferedImage image, double angdeg) {
@@ -139,28 +136,27 @@ public class Situation {
 		}
 	}
 	
-<<<<<<< HEAD
 	private static BufferedImage addLabel(BufferedImage image, String label) {
-		BufferedImage textImage = new BufferedImage(image.getWidth(), image.getHeight()+10*20, image.getType());
+		int lineSize = 15;
+		BufferedImage textImage = new BufferedImage(image.getWidth(), image.getHeight()+10*lineSize, image.getType());
 		
 		String text[] = label.split("\\. ",3);
 		Graphics g = textImage.getGraphics();
 		g.setColor(Color.white);
 		g.fillRect(0, 0, textImage.getWidth(), textImage.getHeight());
 		g.setColor(Color.black);
-		g.setFont(g.getFont().deriveFont(20f));
-		g.drawImage(image, 0, 2*20, image.getWidth(), image.getHeight(), null);
-		g.drawString("Question " + "1", 10, 20);
+		g.setFont(g.getFont().deriveFont(lineSize));
+		g.drawImage(image, 0, 2*lineSize, image.getWidth(), image.getHeight(), null);
+		g.drawString("Question " + "1", 10, lineSize);
 		int i = 0;
 		for (String line : text) { 
-			g.drawString(line, 10, image.getHeight()+3*20+i*20);
+			g.drawString(line, 10, image.getHeight()+3*lineSize+i*lineSize);
 			i++;
 		}
 		
 		return textImage;
 	}
 	
-=======
 	public String printQuestion() {
 		//int unknown = this.random.nextInt(); 
 		int unknown = 3; 
@@ -218,6 +214,5 @@ public class Situation {
 			
 			return output;
 	}
->>>>>>> 7183da8ba6967fb2e40e8b369acb799eedea48b7
 }
 	
