@@ -36,13 +36,15 @@ public class Situation {
 		
 		String[][] bodyList = { {"Box","2","images/default.png"},
 								{"Penguin","23","images/penguin.png"},
-								{"Banana","0.35","images/banana.png"}
+								{"Banana","0.35","images/banana.png"},
+								{"Car","1500","images/car.png"},
 		};
 		
 		int choice = random.nextInt(bodyList.length);
 		this.m = Double.parseDouble(bodyList[choice][1]);
 		
 		this.body = new Body(bodyList[choice][0], Math.round((random.nextGaussian()*0.25*this.m +this.m)*100.0) / 100.0, bodyList[choice][2]);
+		
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
