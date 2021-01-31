@@ -1,0 +1,35 @@
+body{
+  background-color:#7FFFD4; 
+}
+
+h1{
+  position:absolute;
+  top:10%;
+  margin:10%;
+  letter-spacing:8;
+  font-family:Impact,sans-serif;
+  font-size:55pt;
+  color:#4B0082;
+  }
+
+.dropdown{
+  background-color:#66CDAA;
+  padding:5%;
+  position:absolute;
+  top:25%;
+  margin:10%;
+  width:70%;
+  font-size=100px;
+}
+
+
+#classes{
+  font-size:30px;
+}
+
+
+button{
+  position:absolute;
+  top:92%;
+  left:80%;
+}
