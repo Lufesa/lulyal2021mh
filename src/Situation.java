@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
@@ -19,7 +20,6 @@ public class Situation {
 	
 	private String name = "Simple problem of a ramp-box problem without friction";
 
-	
 	private double T;
 	private double m;
 	private double g = 9.81;
@@ -32,7 +32,7 @@ public class Situation {
 	
 	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables(String path) {
-		this.body = new Body("Box", random.nextDouble(), "images/banana.png");
+		this.body = new Body("Box", random.nextDouble(), "images/penguin.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -52,13 +52,13 @@ public class Situation {
 	}
 	
 	public void createFigure() {
-		BufferedImage combined = new BufferedImage(sketch.getHeight(), sketch.getWidth(), BufferedImage.TYPE_4BYTE_ABGR);
+		BufferedImage combined = new BufferedImage(sketch.getWidth(), sketch.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = combined.getGraphics();
 		
-		BufferedImage image = scaleImage(body.getImage(), 195,100);
+		BufferedImage image = scaleImage(body.getImage(), 200,100);
 		image = rotateImage(image, -20);
 		g.drawImage(sketch, 0,0, null);
-		g.drawImage(image, 650-image.getWidth()/2, 400-image.getHeight()/2, null);
+		g.drawImage(image, 487-image.getWidth()/2, 164-image.getHeight()/2, null);
 		
 		g.dispose();
 		this.sketch = combined;
@@ -88,8 +88,10 @@ public class Situation {
 		
 		JFrame frame = new JFrame();
 		situation.createFigure();
-		frame.add(new Sketch(situation.getSketch()));
+		BufferedImage sketch = addLabel(situation.getSketch(), "Given that m = " + "1.5" + "kg, and the acceleration is " + " 3 " + "m/s^2. What is the tension on the cable?");
+		frame.add(new Sketch(sketch));
 		frame.setSize(new Dimension(1080, 1080));
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
 	}
@@ -141,6 +143,26 @@ public class Situation {
 			g.drawImage(image, 0, 0, null);
 			repaint();
 		}
+	}
+	
+	private static BufferedImage addLabel(BufferedImage image, String label) {
+		BufferedImage textImage = new BufferedImage(image.getWidth(), image.getHeight()+10*20, image.getType());
+		
+		String text[] = label.split("\\. ",3);
+		Graphics g = textImage.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, textImage.getWidth(), textImage.getHeight());
+		g.setColor(Color.black);
+		g.setFont(g.getFont().deriveFont(20f));
+		g.drawImage(image, 0, 2*20, image.getWidth(), image.getHeight(), null);
+		g.drawString("Question " + "1", 10, 20);
+		int i = 0;
+		for (String line : text) { 
+			g.drawString(line, 10, image.getHeight()+3*20+i*20);
+			i++;
+		}
+		
+		return textImage;
 	}
 	
 }
