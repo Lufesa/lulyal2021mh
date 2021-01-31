@@ -32,13 +32,23 @@ public class Situation {
 	
 	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables(String path) {
-		this.body = new Body("Box", random.nextDouble(), "images/banana.png");
+		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0, "images/banana.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Situation sketch could not be loaded");
 		}
 		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
+		this.a = Math.round((random.nextGaussian()*6+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
+		this.theta = Math.round((random.nextGaussian()*30+45)*100.0) / 100.0;
+		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
+		
+		try {
+			this.sketch = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.out.println("Situation sketch could not be loaded");
+		}
+		
 		
 	}
 	
@@ -72,25 +82,12 @@ public class Situation {
 		Situation situation = new Situation();
 		situation.createProblemVariables("./images/situation.png");
 		
-			
-	
-		// Get information from an object in CSV file
-//		BufferedReader csvReader = new BufferedReader(new FileReader("C:\\\\Users\\\\superlufesa\\\\Desktop\\\\McHacks2021\\\\src\\\\objectData.csv"));
-//
-//		while ((row = csvReader.readLine()) != null) {
-//		    String[] data = row.split(",");
-//		    System.out.println(data[0]);
-//		    extract = data;
-//		}
-//		csvReader.close();
-//		
-//		System.out.println(extract[1]);
-		
 		JFrame frame = new JFrame();
 		situation.createFigure();
 		frame.add(new Sketch(situation.getSketch()));
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setVisible(true);
+		System.out.println(situation.printQuestion());
 		
 	}
 	
@@ -141,6 +138,30 @@ public class Situation {
 			g.drawImage(image, 0, 0, null);
 			repaint();
 		}
+		
 	}
+	
+	public String printQuestion() {
+		//int unknown = this.random.nextInt(); 
+		int unknown = 0; 
+		String output;
+		
+		
+				//Case where we need to find theta given everything else
+			if (unknown==0) {
+					output = "Find the angle of the slope on which the " + this.body.getName().toLowerCase() + " with a mass of " +
+			this.body.getMass() + " kg is accelerating at " + Math.abs(this.a) +"m/(s^2)";
+				if (a<0) {
+					output = output + " downwards. The tension in the cable is of " + this.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + this.theta + ".";
+				} else {
+					output = output + " upwards. The tension in the cable is of " + this.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + this.theta + ".";
+				}
+			} else {
+			output ="Something else";
+			}
+				return output;
+	}
+	
+	
 	
 }
