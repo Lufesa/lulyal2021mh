@@ -24,14 +24,16 @@ public class Situation {
 	
 	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables () {
-		this.body = new Body("Box", random.nextDouble());
+		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0);
 		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
-		
+		this.a = Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0;
+		this.theta = Math.round((random.nextGaussian()*30+45)*100.0) / 100.0;
+		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
 	}
 	
 	// Solve the problem 
 	public void solveProblem() {
-		T = m*a+m*g*Math.sin(Math.toRadians(theta));
+		
 	}
 	
 	public void createFigure() {
@@ -47,26 +49,40 @@ public class Situation {
 
 	
 	public static void main(String[] args) throws IOException{
-		String row;
-		String[] extract = new String[5];
+		
 		
 		Situation situation = new Situation();
 		situation.createProblemVariables();
 		
-			
-	
-		// Get information from an object in CSV file
-		BufferedReader csvReader = new BufferedReader(new FileReader("C:\\\\Users\\\\superlufesa\\\\Desktop\\\\McHacks2021\\\\src\\\\objectData.csv"));
-
-		while ((row = csvReader.readLine()) != null) {
-		    String[] data = row.split(",");
-		    System.out.println(data[0]);
-		    extract = data;
-		}
-		csvReader.close();
 		
-		System.out.println(extract[1]);
+		//int unknown = situation.random.nextInt(5);
+		int unknown = 0;
+		
+		// Case where we need to find theta given everything else
+		if (unknown==0) {
+			System.out.println("Find the angle of the slope where the " + situation.body.getName().toLowerCase() + " with a mass of " + situation.body.getMass() + " kg is accelerating at " + situation.a +"m/(s^2). The tension in the cable is of " + situation.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + situation.theta + "." );
+		} else {
+			System.out.println("Something else");
+		}
 		
 	}
 	
 }
+
+
+
+/*
+// Get information from an object in CSV file
+String row;
+String[] extract = new String[5];
+BufferedReader csvReader = new BufferedReader(new FileReader("C:\\Users\\superlufesa\\Desktop\\McHacks2021\\src\\objectData.csv"));
+
+while ((row = csvReader.readLine()) != null) {
+    String[] data = row.split(",");
+    System.out.println(data[0]);
+    extract = data;
+}
+csvReader.close();
+
+System.out.println(extract[1]);
+*/
