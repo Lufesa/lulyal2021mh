@@ -1,0 +1,149 @@
+/*the code for the body gradient background has been taken from https://codepen.io/P1N2O/pen/pyBNzX */
+body {
+  display:block;
+	background: linear-gradient(-110deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+#back{
+  display:block;
+  font-size:1.8em;
+  font-family:Impact,sans-serif;
+  color:#7B68EE;
+}
+
+h1{
+  display:block;
+  position:absolute;
+  top:7%;
+  margin:10%;
+  letter-spacing:8;
+  font-family:Impact,sans-serif;
+  font-size:55pt;
+  color:#4B0082;
+  }
+
+.dropdown{
+  display:block;
+  border-radius:5px;
+  padding:2%;
+  position:absolute;
+  top:23%;
+  margin:10%;
+  width:43%;
+  
+}
+
+select{
+  display:block;
+  width: 400px;
+  height: 50px;
+  border: 1px solid #D8BFD8;
+  font-size:1.5em;
+  border-width:3px;
+  font-family:FreeMono,sans-serif;
+  color:#4B0082;
+}
+
+input{
+  display:block;
+  width: 391px;
+  height: 44px;
+  border: 1px solid #D8BFD8;
+  font-size:1.5em;
+  border-radius:5px;
+  border-width:3px;
+  font-family:FreeMono,sans-serif;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color:#4B0082;
+  opacity: 0.8; /* Firefox */
+}
+
+
+#circle1 {
+  display:block;
+    background: #FFA500;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    position:absolute;
+    top:-67%;
+    right:-70%;
+}
+
+#circle2 {
+  display:block;
+    background: #FFA500;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    position:absolute;
+    top:-59%;
+    right:-35%;
+}
+
+
+#circle3 {
+  display:block;
+    background: #FFA500;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    position:absolute;
+    top:-15%;
+    right:-57%;
+}
+
+
+#circle4 {
+  display:block;
+    background: #FFA500;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    position:absolute;
+    top:-19%;
+    right:-37%;
+}
+
+
+#circle5 {
+  display:block;
+    background: #FFA500;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position:absolute;
+    top:-38%;
+    right:-45%;
+}
+
+button{
+  display:block;
+  position:absolute;
+  top:85%;
+  left:65%;
+  font-size:2.8em;
+  font-style:oblique;
+  color:#DA70D6;
+  font-family:Impact,sans-serif;
+  letter-spacing:4;
+  background:#E6E6FA;
+  border-radius:4px;
+  padding: 10px 20px;
+}

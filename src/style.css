@@ -1,0 +1,120 @@
+/*the code for the body gradient background has been taken from https://codepen.io/P1N2O/pen/pyBNzX */
+
+body {
+	background: linear-gradient(-110deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.page{
+  height:100%;
+  width:100%;
+  margin:0;
+  position:relative;
+}
+
+.company_name{
+  */background:orange;
+  position:absolute;
+  top:12%;
+  left:10%;
+  letter-spacing:8;
+  font-family:Impact,sans-serif;
+  font-size:55;
+  color:#0000CD;
+}
+
+h3{
+  display:block;
+  position:relative;
+  bottom:-280;
+  font-size:25;
+  margin:10%;
+  width:75%;
+  color:#E6E6FA;
+  font-family:FreeMono,sans-serif;
+  letter-spacing:2;
+  line-height:2;
+  font-style:italic;
+  font-weight:90;
+}
+
+button{
+  position:absolute;
+  top:69%;
+  right:10%;
+  font-size:42;
+  font-style:oblique;
+  color:#FF00FF;
+  font-family:Impact,sans-serif;
+  letter-spacing:4;
+  background:#E6E6FA;
+  border-radius:4px;
+  padding: 10px 20px;
+}
+
+#circle1 {
+    background: #FFA500;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    position:relative;
+    bottom:350;
+    left:1000;
+}
+
+#circle2 {
+    background: #FFA500;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    position:relative;
+    bottom:460;
+    left:798;
+}
+
+#circle3 {
+    background: #FFA500;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    position:relative;
+    bottom:400;
+    left:988;
+}
+
+#circle4 {
+    background: #FFA500;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    position:relative;
+    bottom:500;
+    left:870;
+}
+
+#circle5 {
+    background: #FFA500;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position:relative;
+    bottom:637;
+    left:930;
+}
+
+
+
+
