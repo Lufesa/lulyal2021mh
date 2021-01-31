@@ -31,6 +31,7 @@ public class Situation {
 	private Random random = new Random();
 	
 	// Main variables needed, might end up putting it in the constructor tho
+	
 	public void createProblemVariables(String path) {
 		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0, "images/banana.png");
 		try {
@@ -38,11 +39,11 @@ public class Situation {
 		} catch (IOException e) {
 			System.out.println("Situation sketch could not be loaded");
 		}
-		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
-		this.a = Math.round((random.nextGaussian()*6+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
-		this.theta = Math.round((random.nextGaussian()*30+45)*100.0) / 100.0;
-		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
 		
+		this.a = Math.round((random.nextGaussian()*8+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
+		this.theta = Math.round((random.nextGaussian()*20+45)*100.0) / 100.0;
+		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
+		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg."+this.theta);
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -76,24 +77,19 @@ public class Situation {
 
 	
 	public static void main(String[] args) throws IOException{
-		String row;
-		String[] extract = new String[5];
-		
 		Situation situation = new Situation();
 		situation.createProblemVariables("./images/situation.png");
-		
 		JFrame frame = new JFrame();
 		situation.createFigure();
 		frame.add(new Sketch(situation.getSketch()));
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setVisible(true);
 		System.out.println(situation.printQuestion());
-		
 	}
 	
 	private BufferedImage rotateImage(BufferedImage image, double angdeg) {
-		// Copied from https://blog.idrsolutions.com/2019/05/image-rotation-in-java/
 		
+		// Copied from https://blog.idrsolutions.com/2019/05/image-rotation-in-java/
 		final double rads = Math.toRadians(angdeg);
 		final double sin = Math.abs(Math.sin(rads));
 		final double cos = Math.abs(Math.cos(rads));
@@ -126,25 +122,21 @@ public class Situation {
 	}
 	
 	private static class Sketch extends JPanel{
-		
 		public BufferedImage image;
-		
 		public Sketch(BufferedImage image) {
 			super();
 			this.image = image;
 		}
-		
 		public void paintComponent(Graphics g) {
 			g.drawImage(image, 0, 0, null);
 			repaint();
 		}
-		
 	}
 	
 	public String printQuestion() {
 		//int unknown = this.random.nextInt(); 
-		int unknown = 0; 
-		String output;
+		int unknown = 3; 
+		String output = "empty";
 		
 		
 				//Case where we need to find theta given everything else
@@ -156,12 +148,47 @@ public class Situation {
 				} else {
 					output = output + " upwards. The tension in the cable is of " + this.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + this.theta + ".";
 				}
-			} else {
-			output ="Something else";
-			}
-				return output;
+			} else if (unknown == 1) {
+				unknown --;
+				String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+									{" angle theta",String.valueOf(this.theta)}, 
+									{" tension of the cable ", String.valueOf(this.T) } };
+				
+				output = "Find the"+ data[unknown][0] +"of the "+this.body.getName().toLowerCase()+ " on the slope with the" + data[unknown+1][0]+" = " + data[unknown+1][1] + " degrees. The"+data[unknown +2][0] +
+						"is of " + this.T + "N and the acceleration of the "+this.body.getName().toLowerCase()+ " is of "+Math.abs(this.a) +"m/(s^2)";
+							if (a<0) {
+								output = output + " downwards. Assume g = 9.81m/(s^2)." ;
+							} else {
+								output = output + " upwards. Assume g = 9.81m/(s^2)." ;
+							} 
+
+				}				
+				else if (unknown == 2) {
+				unknown --;
+				String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+									{" angle theta",String.valueOf(this.theta)}, 
+									{" tension of the cable", String.valueOf(this.T) } };
+				
+				output = "Find the acceleration of the "+this.body.getName().toLowerCase()+ " on the slope with the angle theta = " + data[unknown+1][1] + " degrees. The tension in the cable is of " +
+						 + this.T + "N and the mass is of "+this.body.getMass() +" kg.";
+				} else if (unknown == 3) {
+					
+					String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+										{" angle theta",String.valueOf(this.theta)}, 
+										{" tension of the cable", String.valueOf(this.T) } };
+					
+					output = "Find the tension in the cable pulling the "+this.body.getName().toLowerCase()+ " on the slope with the" + data[1][0]+" = " + data[1][1] +
+							" degrees. The mass of the "+this.body.getName().toLowerCase()+" is of "+this.body.getMass() +"kg and the acceleration is of "+this.a+" m/(s^2)";
+								if (a<0) {
+									output = output + " downwards. Assume g = 9.81m/(s^2)." ;
+								} else {
+									output = output + " upwards. Assume g = 9.81m/(s^2)." ;
+								}
+					}
+			
+			
+			
+			return output;
 	}
-	
-	
-	
 }
+	
