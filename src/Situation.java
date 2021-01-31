@@ -32,7 +32,7 @@ public class Situation {
 	
 	// Main variables needed, might end up putting it in the constructor tho
 	public void createProblemVariables(String path) {
-		this.body = new Body("Box", random.nextDouble());
+		this.body = new Body("Box", random.nextDouble(), "images/banana.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -55,9 +55,10 @@ public class Situation {
 		BufferedImage combined = new BufferedImage(sketch.getHeight(), sketch.getWidth(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = combined.getGraphics();
 		
-		BufferedImage image = rotateImage(body.getImage(), 20);
+		BufferedImage image = scaleImage(body.getImage(), 195,100);
+		image = rotateImage(image, -20);
 		g.drawImage(sketch, 0,0, null);
-		g.drawImage(image, 610-image.getHeight()/2, 420-image.getWidth()/2, null);
+		g.drawImage(image, 650-image.getWidth()/2, 400-image.getHeight()/2, null);
 		
 		g.dispose();
 		this.sketch = combined;
@@ -109,7 +110,22 @@ public class Situation {
 		final AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 		rotateOp.filter(image,rotatedImage);
 		
-		return image;
+		return rotatedImage;
+	}
+	
+	private BufferedImage scaleImage(BufferedImage image, int wlim,int hlim) {
+		double wfactor = (double)wlim / image.getWidth();
+		double hfactor = (double)hlim / image.getHeight();
+		double factor = Math.min(wfactor, hfactor);
+		
+		BufferedImage scaledImage = new BufferedImage(wlim, hlim, image.getType());
+		
+		AffineTransform at = new AffineTransform();
+		at.scale(factor, factor);
+		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		scaleOp.filter(image, scaledImage);
+		
+		return scaledImage;
 	}
 	
 	private static class Sketch extends JPanel{

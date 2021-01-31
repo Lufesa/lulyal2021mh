@@ -48,6 +48,7 @@ public class Body {
 		}
 	}
 	
-	
+	// Source for banana.png https://www.deviantart.com/alexismnrs/art/Banana-Vector-575755744
+	// Source for penguin.png http://www.pngall.com/penguin-png/download/1857
 
 }
