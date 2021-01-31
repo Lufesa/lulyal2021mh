@@ -33,29 +33,18 @@ public class Situation {
 	// Main variables needed, might end up putting it in the constructor tho
 	
 	public void createProblemVariables(String path) {
-		
-		String[][] bodyList = { {"Box","2","images/default.png"},
-								{"Penguin","23","images/penguin.png"},
-								{"Banana","0.35","images/banana.png"},
-								{"Car","1500","images/car.png"},
-		};
-		
-		int choice = random.nextInt(bodyList.length);
-		this.m = Double.parseDouble(bodyList[choice][1]);
-		
-		this.body = new Body(bodyList[choice][0], Math.round((random.nextGaussian()*0.25*this.m +this.m)*100.0) / 100.0, bodyList[choice][2]);
-		
+		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0, "images/banana.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Situation sketch could not be loaded");
 		}
 		
-		this.a = Math.round((random.nextDouble()*(8-this.g*Math.sin(Math.toRadians(theta))) + this.g*Math.sin(Math.toRadians(theta)) )*100.0) / 100.0;
-		this.theta = Math.round((random.nextDouble()*20+45)*100.0) / 100.0;
+		this.a = Math.round((random.nextGaussian()*8+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
+		this.theta = Math.round((random.nextGaussian()*20+45)*100.0) / 100.0;
 		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
 		
-		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
+		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg."+this.theta);
 		
 		try {
 			this.sketch = ImageIO.read(new File(path));
@@ -95,10 +84,26 @@ public class Situation {
 		JFrame frame = new JFrame();
 		situation.createFigure();
 		BufferedImage sketch = addLabel(situation.getSketch(), situation.printQuestion());
+		
+		try {
+			File out = new File("images/Problem.png");
+			ImageIO.write(sketch,"png", out);
+			System.out.println("File created");
+		} catch(IOException e) {
+			System.out.println("Could not create a png image");
+		}
+		
 		frame.add(new Sketch(sketch));
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		try {
+			File out = new File("Problem.png");
+			ImageIO.write(sketch,"png", out);
+		} catch(IOException e) {
+			System.out.println("Could not create a png image");
+		}
 	}
 	
 	private BufferedImage rotateImage(BufferedImage image, double angdeg) {
@@ -169,8 +174,7 @@ public class Situation {
 	}
 	
 	public String printQuestion() {
-		//int unknown = this.random.nextInt(); 
-		int unknown = 3; 
+		int unknown = random.nextInt(3); 
 		String output = "empty";
 		
 		
