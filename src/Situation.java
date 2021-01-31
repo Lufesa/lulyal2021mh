@@ -97,13 +97,6 @@ public class Situation {
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
-		try {
-			File out = new File("Problem.png");
-			ImageIO.write(sketch,"png", out);
-		} catch(IOException e) {
-			System.out.println("Could not create a png image");
-		}
 	}
 	
 	private BufferedImage rotateImage(BufferedImage image, double angdeg) {
