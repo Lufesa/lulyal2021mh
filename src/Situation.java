@@ -31,14 +31,29 @@ public class Situation {
 	private Random random = new Random();
 	
 	// Main variables needed, might end up putting it in the constructor tho
+	
 	public void createProblemVariables(String path) {
+<<<<<<< HEAD
 		this.body = new Body("Box", random.nextDouble(), "images/penguin.png");
+=======
+		this.body = new Body("Box", Math.round((random.nextGaussian()*0.5+2)*100.0) / 100.0, "images/banana.png");
 		try {
 			this.sketch = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Situation sketch could not be loaded");
 		}
-		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg.");
+		
+		this.a = Math.round((random.nextGaussian()*8+4-this.g*Math.sin(Math.toRadians(theta)))*100.0) / 100.0;
+		this.theta = Math.round((random.nextGaussian()*20+45)*100.0) / 100.0;
+		T = Math.round((body.getMass()*a+this.body.getMass()*g*Math.sin(Math.toRadians(theta)))*100.0)/100.0;
+		System.out.println("I just created a "+body.getName()+" that's "+body.getMass()+" kg."+this.theta);
+>>>>>>> 7183da8ba6967fb2e40e8b369acb799eedea48b7
+		try {
+			this.sketch = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.out.println("Situation sketch could not be loaded");
+		}
+		
 		
 	}
 	
@@ -66,26 +81,8 @@ public class Situation {
 
 	
 	public static void main(String[] args) throws IOException{
-		String row;
-		String[] extract = new String[5];
-		
 		Situation situation = new Situation();
 		situation.createProblemVariables("./images/situation.png");
-		
-			
-	
-		// Get information from an object in CSV file
-//		BufferedReader csvReader = new BufferedReader(new FileReader("C:\\\\Users\\\\superlufesa\\\\Desktop\\\\McHacks2021\\\\src\\\\objectData.csv"));
-//
-//		while ((row = csvReader.readLine()) != null) {
-//		    String[] data = row.split(",");
-//		    System.out.println(data[0]);
-//		    extract = data;
-//		}
-//		csvReader.close();
-//		
-//		System.out.println(extract[1]);
-		
 		JFrame frame = new JFrame();
 		situation.createFigure();
 		BufferedImage sketch = addLabel(situation.getSketch(), "Given that m = " + "1.5" + "kg, and the acceleration is " + " 3 " + "m/s^2. What is the tension on the cable?");
@@ -93,12 +90,12 @@ public class Situation {
 		frame.setSize(new Dimension(1080, 1080));
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
+		System.out.println(situation.printQuestion());
 	}
 	
 	private BufferedImage rotateImage(BufferedImage image, double angdeg) {
-		// Copied from https://blog.idrsolutions.com/2019/05/image-rotation-in-java/
 		
+		// Copied from https://blog.idrsolutions.com/2019/05/image-rotation-in-java/
 		final double rads = Math.toRadians(angdeg);
 		final double sin = Math.abs(Math.sin(rads));
 		final double cos = Math.abs(Math.cos(rads));
@@ -131,20 +128,18 @@ public class Situation {
 	}
 	
 	private static class Sketch extends JPanel{
-		
 		public BufferedImage image;
-		
 		public Sketch(BufferedImage image) {
 			super();
 			this.image = image;
 		}
-		
 		public void paintComponent(Graphics g) {
 			g.drawImage(image, 0, 0, null);
 			repaint();
 		}
 	}
 	
+<<<<<<< HEAD
 	private static BufferedImage addLabel(BufferedImage image, String label) {
 		BufferedImage textImage = new BufferedImage(image.getWidth(), image.getHeight()+10*20, image.getType());
 		
@@ -165,4 +160,64 @@ public class Situation {
 		return textImage;
 	}
 	
+=======
+	public String printQuestion() {
+		//int unknown = this.random.nextInt(); 
+		int unknown = 3; 
+		String output = "empty";
+		
+		
+				//Case where we need to find theta given everything else
+			if (unknown==0) {
+					output = "Find the angle of the slope on which the " + this.body.getName().toLowerCase() + " with a mass of " +
+			this.body.getMass() + " kg is accelerating at " + Math.abs(this.a) +"m/(s^2)";
+				if (a<0) {
+					output = output + " downwards. The tension in the cable is of " + this.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + this.theta + ".";
+				} else {
+					output = output + " upwards. The tension in the cable is of " + this.T + "N. Assume g = 9.81m/(s^2). The answer is theta = " + this.theta + ".";
+				}
+			} else if (unknown == 1) {
+				unknown --;
+				String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+									{" angle theta",String.valueOf(this.theta)}, 
+									{" tension of the cable ", String.valueOf(this.T) } };
+				
+				output = "Find the"+ data[unknown][0] +"of the "+this.body.getName().toLowerCase()+ " on the slope with the" + data[unknown+1][0]+" = " + data[unknown+1][1] + " degrees. The"+data[unknown +2][0] +
+						"is of " + this.T + "N and the acceleration of the "+this.body.getName().toLowerCase()+ " is of "+Math.abs(this.a) +"m/(s^2)";
+							if (a<0) {
+								output = output + " downwards. Assume g = 9.81m/(s^2)." ;
+							} else {
+								output = output + " upwards. Assume g = 9.81m/(s^2)." ;
+							} 
+
+				}				
+				else if (unknown == 2) {
+				unknown --;
+				String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+									{" angle theta",String.valueOf(this.theta)}, 
+									{" tension of the cable", String.valueOf(this.T) } };
+				
+				output = "Find the acceleration of the "+this.body.getName().toLowerCase()+ " on the slope with the angle theta = " + data[unknown+1][1] + " degrees. The tension in the cable is of " +
+						 + this.T + "N and the mass is of "+this.body.getMass() +" kg.";
+				} else if (unknown == 3) {
+					
+					String[][] data = { {" mass ",String.valueOf(this.body.getMass())},
+										{" angle theta",String.valueOf(this.theta)}, 
+										{" tension of the cable", String.valueOf(this.T) } };
+					
+					output = "Find the tension in the cable pulling the "+this.body.getName().toLowerCase()+ " on the slope with the" + data[1][0]+" = " + data[1][1] +
+							" degrees. The mass of the "+this.body.getName().toLowerCase()+" is of "+this.body.getMass() +"kg and the acceleration is of "+this.a+" m/(s^2)";
+								if (a<0) {
+									output = output + " downwards. Assume g = 9.81m/(s^2)." ;
+								} else {
+									output = output + " upwards. Assume g = 9.81m/(s^2)." ;
+								}
+					}
+			
+			
+			
+			return output;
+	}
+>>>>>>> 7183da8ba6967fb2e40e8b369acb799eedea48b7
 }
+	
